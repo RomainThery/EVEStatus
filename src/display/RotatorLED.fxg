@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Graphic version="2.0" viewHeight="16" viewWidth="16" ai:appVersion="15.0.0.399" ATE:version="1.0.0" flm:version="1.0.0" d:using="" xmlns="http://ns.adobe.com/fxg/2008" xmlns:ATE="http://ns.adobe.com/ate/2009" xmlns:ai="http://ns.adobe.com/ai/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:flm="http://ns.adobe.com/flame/2008">
+  <Library/>
+  <Group ai:seqID="1" d:layerType="page" d:pageHeight="16" d:pageWidth="16" d:type="layer" d:userLabel="Artboard 1">
+    <Group ai:seqID="2" d:type="layer" d:userLabel="Layer 1">
+      <Ellipse width="16" height="16" ai:seqID="3">
+        <fill>
+          <RadialGradient x="8" y="8" scaleX="16" scaleY="16">
+            <GradientEntry ratio="0.0666667" color="#F2F2F2"/>
+            <GradientEntry ratio="0.220598" color="#F0F0F0"/>
+            <GradientEntry ratio="0.344287" color="#E9E9E9"/>
+            <GradientEntry ratio="0.459323" color="#DADADA"/>
+            <GradientEntry ratio="0.567366" color="#C5C5C5"/>
+            <GradientEntry ratio="0.67305" color="#A7A7A7"/>
+            <GradientEntry ratio="0.774838" color="#818181"/>
+            <GradientEntry ratio="0.969697" color="#1A1A1A"/>
+          </RadialGradient>
+        </fill>
+      </Ellipse>
+    </Group>
+  </Group>
+  <Private/>
+</Graphic>

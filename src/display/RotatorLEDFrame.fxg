@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Graphic version="2.0" viewHeight="24" viewWidth="24" ai:appVersion="15.0.0.399" ATE:version="1.0.0" flm:version="1.0.0" d:using="" xmlns="http://ns.adobe.com/fxg/2008" xmlns:ATE="http://ns.adobe.com/ate/2009" xmlns:ai="http://ns.adobe.com/ai/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:flm="http://ns.adobe.com/flame/2008">
+  <Library/>
+  <Group ai:seqID="1" d:layerType="page" d:pageHeight="24" d:pageWidth="24" d:type="layer" d:userLabel="Artboard 1">
+    <Group ai:seqID="2" d:type="layer" d:userLabel="Layer 1">
+      <Group ai:seqID="3" d:userLabel="Core Rotator">
+        <Group ai:seqID="4" flm:knockout="false">
+          <Path x="0.5" y="0.5" winding="nonZero" ai:seqID="5" data="M11.5 23C5.15869 23 0 17.8408 0 11.5 0 5.15869 5.15869 0 11.5 0 17.8408 0 23 5.15869 23 11.5 23 17.8408 17.8408 23 11.5 23Z">
+            <fill>
+              <SolidColor color="#444444"/>
+            </fill>
+          </Path>
+          <Path winding="nonZero" ai:seqID="6" data="M12 1C18.0654 1 23 5.93457 23 12 23 18.0654 18.0654 23 12 23 5.93457 23 1 18.0654 1 12 1 5.93457 5.93457 1 12 1ZM12 0C5.37305 0 0 5.37305 0 12 0 18.627 5.37305 24 12 24 18.627 24 24 18.627 24 12 24 5.37305 18.627 0 12 0L12 0Z">
+            <fill>
+              <SolidColor/>
+            </fill>
+          </Path>
+        </Group>
+        <Ellipse x="2" y="2" width="20" height="20" ai:seqID="7">
+          <fill>
+            <LinearGradient x="10" y="20" scaleX="20" rotation="270">
+              <GradientEntry ratio="0" color="#F2F2F2"/>
+              <GradientEntry ratio="0.232117" color="#9B9B9B"/>
+              <GradientEntry ratio="0.450692" color="#595959"/>
+              <GradientEntry ratio="0.653122" color="#2C2C2C"/>
+              <GradientEntry ratio="0.818182" color="#1A1A1A"/>
+            </LinearGradient>
+          </fill>
+        </Ellipse>
+      </Group>
+    </Group>
+  </Group>
+  <Private/>
+</Graphic>
