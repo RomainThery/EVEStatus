@@ -33,7 +33,7 @@ package windows
 			opacitySlider.setSliderParams(10, 100, Main.SO.data.settings.alpha * 100);
 			
 			OKButton = new PushButton(this, 0, 0, "OK", applySettings);
-			cancelButton = new PushButton(this, 0, 0, "Cancel", closeWindow);
+			cancelButton = new PushButton(this, 0, 0, "Cancel", cancelSettings);
 			OKButton.move((width - OKButton.width - cancelButton.width) / 2, height - OKButton.height - 28);
 			cancelButton.move((width - cancelButton.width + OKButton.width) / 2, height - cancelButton.height - 28);
 		}
@@ -51,6 +51,12 @@ package windows
 		private function applySettings(pEvt:MouseEvent):void
 		{
 			Main.SO.data.settings.alpha = opacitySlider.value / 100;
+			Main.APP.alpha = Main.SO.data.settings.alpha;
+			closeWindow();
+		}
+		
+		private function cancelSettings(pEvt:MouseEvent):void
+		{
 			Main.APP.alpha = Main.SO.data.settings.alpha;
 			closeWindow();
 		}
