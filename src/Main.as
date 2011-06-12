@@ -22,6 +22,7 @@ package
 		protected var VisitorFont:Class;
 		
 		public static var SO:SharedObject = SharedObject.getLocal("EVEStatus");
+		public static var MAIN_APP:Main;
 		public static var APP:Sprite;
 		
 		public var rotatorInnerContainer:Sprite = new Sprite();
@@ -42,17 +43,21 @@ package
 		public var creditsWindow:NativeWindow;
 		public var appContainer:Sprite = new Sprite();
 		
+		public var rightClickMenu:NativeMenu;
+		public var opacitySubMenu:NativeMenu;
+		
 		public function Main()
 		{
 			NativeApplication.nativeApplication.autoExit = false;
 			stage.nativeWindow.close();
+			MAIN_APP = this;
 			
 			// Setting up the SO if it's the first time the app is run
 			if (SO.size == 0)
 			{
 				var settingsObj:Object = new Object();
 				SO.data.settings = settingsObj;
-				SO.data.settings.alphaDefault = 0.5;
+				SO.data.settings.alphaDefault = 60;
 				SO.data.settings.alpha = SO.data.settings.alphaDefault;
 			}
 			
@@ -67,7 +72,7 @@ package
 			
 			Component.initStage(appWindow.stage);
 			appWindow.stage.addChild(appContainer);
-			appContainer.alpha = SO.data.settings.alpha;
+			appContainer.alpha = SO.data.settings.alpha / 100;
 			APP = appContainer;
 			
 			appContainer.addChild(rotatorOuterContainer);
@@ -93,7 +98,8 @@ package
 			
 			TweenMax.to(rotatorOuterContainer, 3, { repeat: -1, rotation: 360, ease: Linear.easeNone } );
 			TweenMax.to(rotatorInnerContainer, 3, { repeat: -1, rotation: -360, ease: Linear.easeNone } );
-			urlRequest = new URLRequest("https://api.eveonline.com/server/ServerStatus.xml.aspx");
+			urlRequest = new URLRequest("http://apitest.eveonline.com/server/ServerStatus.xml.aspx");
+			//urlRequest = new URLRequest("https://api.eveonline.com/server/ServerStatus.xml.aspx");
 			urlRequest.method = URLRequestMethod.POST;
 			urlLoader = new URLLoader();
 			urlLoader.addEventListener(Event.COMPLETE, updateData);
@@ -113,19 +119,34 @@ package
 			updateTimer.addEventListener(TimerEvent.TIMER, checkUpdate);
 			
 			// Context menu when right-clicking rotatorCore or the systray icon
-			var root:NativeMenu = new NativeMenu();
-			rotatorCore.contextMenu = root;
-			var settings:NativeMenuItem = new NativeMenuItem("Settings", false);
-			settings.addEventListener(Event.SELECT, openSettings);
-			root.addItem(settings);
-			var credits:NativeMenuItem = new NativeMenuItem("About...", false);
-			credits.addEventListener(Event.SELECT, openCredits);
-			root.addItem(credits);
+			var rightClickMenu:NativeMenu = new NativeMenu();
+			rotatorCore.contextMenu = rightClickMenu;
+			//// Submenu to manage the application opacity
+			opacitySubMenu = new NativeMenu();
+			rightClickMenu.addSubmenu(opacitySubMenu, "Opacity");
+			var opacityChoice:NativeMenuItem;
+			for (var i:int = 0; i < 5; i++) 
+			{
+				opacityChoice = new NativeMenuItem(String(i * 20 + 20) + "%");
+				opacityChoice.name = String(i * 20 + 20);
+				opacityChoice.addEventListener(Event.SELECT, onOpacityPicked);
+				opacitySubMenu.addItem(opacityChoice);
+			}
+			////// Checked the current opacity level in the opacity submenu
+			opacitySubMenu.getItemByName(String(Main.SO.data.settings.alpha)).checked = true;
 			var separatorA:NativeMenuItem = new NativeMenuItem("A", true);
-			root.addItem(separatorA);
-			var exit:NativeMenuItem = new NativeMenuItem("Close", false);
+			rightClickMenu.addItem(separatorA);
+			var settings:NativeMenuItem = new NativeMenuItem("Settings");
+			settings.addEventListener(Event.SELECT, openSettings);
+			rightClickMenu.addItem(settings);
+			var credits:NativeMenuItem = new NativeMenuItem("About...");
+			credits.addEventListener(Event.SELECT, openCredits);
+			rightClickMenu.addItem(credits);
+			var separatorB:NativeMenuItem = new NativeMenuItem("B", true);
+			rightClickMenu.addItem(separatorB);
+			var exit:NativeMenuItem = new NativeMenuItem("Close");
 			exit.addEventListener(Event.SELECT, closeApp);
-			root.addItem(exit);
+			rightClickMenu.addItem(exit);
 			
 			// Enable the Systray / Dock icon depending on the OS running the app
             var icon:Loader = new Loader();
@@ -136,7 +157,7 @@ package
                 
                 var systray:SystemTrayIcon = NativeApplication.nativeApplication.icon as SystemTrayIcon;
                 systray.tooltip = "EVEStatus";
-                systray.menu = root;
+                systray.menu = rightClickMenu;
             }
 			
             if (NativeApplication.supportsDockIcon)
@@ -144,7 +165,7 @@ package
                 icon.contentLoaderInfo.addEventListener(Event.COMPLETE,iconLoadComplete);
                 icon.load(new URLRequest("icons/EVEStatus_128.png"));
                 var dock:DockIcon = NativeApplication.nativeApplication.icon as DockIcon; 
-                dock.menu = root;
+                dock.menu = rightClickMenu;
             }
 		}
 		
@@ -201,7 +222,7 @@ package
 		private function onCoreOut(pEvt:MouseEvent):void
 		{
 			rotatorAdd.close();
-			TweenMax.to(appContainer, 0.5, { alpha: SO.data.settings.alpha } );
+			TweenMax.to(appContainer, 0.5, { alpha: SO.data.settings.alpha / 100 } );
 		}
 		
 		private function startMoveDrag(pEvt:MouseEvent):void
@@ -256,6 +277,14 @@ package
 				creditsWindow.activate();
 			}
 			else creditsWindow.activate()
+		}
+		
+		private function onOpacityPicked(pEvt:Event):void
+		{
+			opacitySubMenu.getItemByName(String(Main.SO.data.settings.alpha)).checked = false;
+			NativeMenuItem(pEvt.currentTarget).checked = true;
+			Main.SO.data.settings.alpha = int(NativeMenuItem(pEvt.currentTarget).name);
+			APP.alpha = Main.SO.data.settings.alpha / 100;
 		}
 		
 		private function closeApp(pEvt:Event):void
