@@ -44,6 +44,7 @@ package
 		public var appContainer:Sprite = new Sprite();
 		
 		public var rightClickMenu:NativeMenu;
+		public var alwaysOnTop:NativeMenuItem;
 		public var opacitySubMenu:NativeMenu;
 		
 		public function Main()
@@ -57,6 +58,7 @@ package
 			{
 				var settingsObj:Object = new Object();
 				SO.data.settings = settingsObj;
+				SO.data.settings.alwaysOnTop = false;
 				SO.data.settings.alphaDefault = 60;
 				SO.data.settings.alpha = SO.data.settings.alphaDefault;
 			}
@@ -121,6 +123,10 @@ package
 			// Context menu when right-clicking rotatorCore or the systray icon
 			var rightClickMenu:NativeMenu = new NativeMenu();
 			rotatorCore.contextMenu = rightClickMenu;
+			//// Always on top option
+			alwaysOnTop = new NativeMenuItem("Always on top");
+			alwaysOnTop.addEventListener(Event.SELECT, toggleAlwaysOnTop);
+			rightClickMenu.addItem(alwaysOnTop);
 			//// Submenu to manage the application opacity
 			opacitySubMenu = new NativeMenu();
 			rightClickMenu.addSubmenu(opacitySubMenu, "Opacity");
@@ -277,6 +283,20 @@ package
 				creditsWindow.activate();
 			}
 			else creditsWindow.activate()
+		}
+		
+		public function toggleAlwaysOnTop(pEvt:Object = null):void
+		{
+			if (alwaysOnTop.checked)
+			{
+				alwaysOnTop.checked = false
+				appWindow.alwaysInFront = false;
+			}
+			else
+			{
+				alwaysOnTop.checked = true;
+				appWindow.alwaysInFront = true;
+			}
 		}
 		
 		private function onOpacityPicked(pEvt:Event):void

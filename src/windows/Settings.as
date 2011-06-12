@@ -12,6 +12,7 @@ package windows
 		public var nativeWindow:NativeWindow;
 		
 		public var opacitySlider:HUISlider;
+		public var alwaysOnTopBox:CheckBox;
 		
 		public var OKButton:PushButton;
 		public var cancelButton:PushButton;
@@ -31,7 +32,10 @@ package windows
 			title = "Settings";
 			titleBar.addEventListener(MouseEvent.MOUSE_DOWN, startMoveDrag);
 			
-			opacitySlider = new HUISlider(this, 10, 10, "Opacity (%)", onOpacityChange);
+			alwaysOnTopBox = new CheckBox(this, 10, 10, "Always on top", Main.MAIN_APP.toggleAlwaysOnTop);
+			alwaysOnTopBox.selected = Main.MAIN_APP.alwaysOnTop.checked;
+			
+			opacitySlider = new HUISlider(this, 10, alwaysOnTopBox.y + alwaysOnTopBox.height + 10, "Opacity (%)", onOpacityChange);
 			opacitySlider.setSliderParams(20, 100, Main.SO.data.settings.alpha);
 			opacitySlider.labelPrecision = 0;
 			
