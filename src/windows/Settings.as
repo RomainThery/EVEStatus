@@ -1,5 +1,6 @@
 package windows 
 {
+	import flash.desktop.*;
 	import flash.display.*;
 	import flash.events.*;
 	import com.bit101.components.*;
@@ -13,6 +14,7 @@ package windows
 		
 		public var opacitySlider:HUISlider;
 		public var alwaysOnTopBox:CheckBox;
+		public var startOnLoginBox:CheckBox;
 		
 		public var OKButton:PushButton;
 		public var cancelButton:PushButton;
@@ -35,7 +37,11 @@ package windows
 			alwaysOnTopBox = new CheckBox(this, 10, 10, "Always on top", Main.MAIN_APP.toggleAlwaysOnTop);
 			alwaysOnTopBox.selected = Main.MAIN_APP.alwaysOnTop.checked;
 			
-			opacitySlider = new HUISlider(this, 10, alwaysOnTopBox.y + alwaysOnTopBox.height + 10, "Opacity (%)", onOpacityChange);
+			startOnLoginBox = new CheckBox(this, 10, alwaysOnTopBox.y + alwaysOnTopBox.height + 10, "Run on OS startup", toggleStartOnLogin);
+			trace(NativeApplication.nativeApplication.startAtLogin);
+			startOnLoginBox.selected = NativeApplication.nativeApplication.startAtLogin;
+			
+			opacitySlider = new HUISlider(this, 10, startOnLoginBox.y + startOnLoginBox.height + 10, "Opacity (%)", onOpacityChange);
 			opacitySlider.setSliderParams(20, 100, Main.SO.data.settings.alpha);
 			opacitySlider.labelPrecision = 0;
 			
@@ -52,18 +58,17 @@ package windows
 			opacitySlider.value = _roundedOpacity * 10;
 		}
 		
+		private function toggleStartOnLogin(pEvt:MouseEvent):void
+		{
+			NativeApplication.nativeApplication.startAtLogin = startOnLoginBox.selected;
+		}
+		
 		private function onOpacityChange(pEvt:Event):void
 		{
 			_roundedOpacity = Math.round(opacitySlider.value / 10);
 			if (_roundedOpacity % 2 != 0) _roundedOpacity++;
 			Main.APP.alpha = _roundedOpacity / 10;
 		}
-		
-		private function roundDec(numIn:Number, decimalPlaces:int):Number {
-		var nExp:int = Math.pow(10,decimalPlaces) ;
-		var nRetVal:Number = Math.round(numIn * nExp) / nExp
-		return nRetVal;
-		} 
 		
 		private function startMoveDrag(pEvt:MouseEvent):void
 		{
