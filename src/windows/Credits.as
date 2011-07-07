@@ -34,13 +34,13 @@ package windows
 			var appName:Label = new Label(textArea, 6, 2, "EVEStatus");
 			appName.textField.defaultTextFormat = new TextFormat(null, 18, 0x000000);
 			appName.textField.antiAliasType = AntiAliasType.ADVANCED;
-			var appDescription:Label = new Label(textArea, appName.x + 8, appName.y + appName.height + 10, "Widget monitoring EVE Online live server, Tranquility.\n    By Romain Théry");
+			var appDescription:Label = new Label(textArea, appName.x + 8, appName.y + appName.height + 10, "Widget monitoring EVE Online live server, Tranquility.\nVersion 1.0.5\n    By Romain Théry");
 			appDescription.textField.defaultTextFormat = new TextFormat(null, null, 0x454545);
 			appDescription.textField.multiline = true;
-			var appCredits:Label = new Label(textArea, appName.x, appDescription.y + appDescription.height + 20);
+			var appCredits:Label = new Label(textArea, appName.x, appDescription.y + appDescription.height + 40);
 			appCredits.textField.defaultTextFormat = new TextFormat(null, null, 0x4F4F4F);
 			appCredits.textField.multiline = true;
-			appCredits.text = "Font 'Visitor' by Brian Kent\nAS3 Library 'MinimalComps' by Keith Peters\nAS3 Library 'TweenMax' by Jack Doyle\n\nEVE Online Copyright CCP Games"
+			appCredits.text = "Font 'Visitor' by Brian Kent\nAS3 Library 'MinimalComps' by Keith Peters\nAS3 Library 'TweenMax' by Jack Doyle\n\nEVE Online Copyright CCP Games, used without\nauthorization."
 			
 			//EVEStatus
 			//Widget monitoring EVE Online live server, Tranquility.

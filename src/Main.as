@@ -100,8 +100,8 @@ package
 			
 			TweenMax.to(rotatorOuterContainer, 3, { repeat: -1, rotation: 360, ease: Linear.easeNone } );
 			TweenMax.to(rotatorInnerContainer, 3, { repeat: -1, rotation: -360, ease: Linear.easeNone } );
-			urlRequest = new URLRequest("http://apitest.eveonline.com/server/ServerStatus.xml.aspx");
-			//urlRequest = new URLRequest("https://api.eveonline.com/server/ServerStatus.xml.aspx");
+			//urlRequest = new URLRequest("http://apitest.eveonline.com/server/ServerStatus.xml.aspx");
+			urlRequest = new URLRequest("https://api.eveonline.com/server/ServerStatus.xml.aspx");
 			urlRequest.method = URLRequestMethod.POST;
 			urlLoader = new URLLoader();
 			urlLoader.addEventListener(Event.COMPLETE, updateData);
@@ -164,6 +164,7 @@ package
                 var systray:SystemTrayIcon = NativeApplication.nativeApplication.icon as SystemTrayIcon;
                 systray.tooltip = "EVEStatus";
                 systray.menu = rightClickMenu;
+				systray.addEventListener(ScreenMouseEvent.CLICK, onSystrayClick);
             }
 			
             if (NativeApplication.supportsDockIcon)
@@ -184,6 +185,11 @@ package
 		{
 			trace(pEvt.errorID + ": " + pEvt.text)
 			rotatorAdd.notification.text = "Connection Failure";
+		}
+		
+		private function onSystrayClick(pEvt:ScreenMouseEvent):void
+		{
+			NativeApplication.nativeApplication.activate(appWindow);
 		}
 		
 		private function checkUpdate(pEvt:TimerEvent):void
